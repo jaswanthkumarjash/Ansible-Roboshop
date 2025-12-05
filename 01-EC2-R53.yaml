@@ -1,6 +1,7 @@
 - name: Creating instance and updating route53 record
   hosts: local
   connection: local
+  become: yes
   vars: 
     sg_id: sg-010f0caf83cbf088a
     ami_id: ami-09c813fb71547fc4f
