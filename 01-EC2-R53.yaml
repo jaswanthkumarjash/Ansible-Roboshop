@@ -1,0 +1,36 @@
+- name: Creating instance and updating route53 record
+  hosts: local
+  connection: local
+  vars: 
+    sg_id: sg-010f0caf83cbf088a
+    ami_id: ami-09c813fb71547fc4f
+    hostedzone_id: Z01808731CH4W38TLY466
+    dns_name: jaswanthjash12.shop
+    instances:
+    - mysql
+    - redis
+    - mongo
+  tasks:
+  # - name: Create ec2-instance
+  #   amazon.aws.ec2_instance:
+  #     name: "{{ item }}"
+  #     instance_type: t3.micro
+  #     security_group: "{{ sg_id }}"
+  #     image_id: "{{ ami_id }}"
+  #     tags:
+  #       Name: "{{ item }}"
+  #   loop: "{{ instances }}"
+  #   register: ec2_output
+
+  # - name: Update Rout53 records
+  #   amazon.aws.route53:
+  #     state: present
+  #     zone: "{{ hostedzone_id }}"
+  #     record: "{{  }}.{{ hostedzone_id }}"
+  #     type: A
+  #     ttl: 1
+  #     overwrite: true
+  - name: Print list
+    ansible.builtin.debug:
+      msg: "value is {{ item }}"
+    loop: "{{ instances }}"
