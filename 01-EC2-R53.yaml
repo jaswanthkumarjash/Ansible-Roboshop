@@ -43,4 +43,4 @@
   - name: Print list from prompt
     ansible.builtin.debug:
       msg: "value is {{ item }}"
-    loop: "{{ List }}"
+    loop: "{{ List | split(' ') }}"
