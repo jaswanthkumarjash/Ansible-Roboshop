@@ -10,6 +10,11 @@
     - mysql
     - redis
     - mongo
+  vars_prompt:
+    name: List
+    prompt: "Enter the instance names you want to create: "
+    private: false
+
   tasks:
   # - name: Create ec2-instance
   #   amazon.aws.ec2_instance:
@@ -30,7 +35,12 @@
   #     type: A
   #     ttl: 1
   #     overwrite: true
-  - name: Print list
+  - name: Print list from instances
     ansible.builtin.debug:
       msg: "value is {{ item }}"
     loop: "{{ instances }}"
+
+  - name: Print list from prompt
+    ansible.builtin.debug:
+      msg: "value is {{ item }}"
+    loop: "{{ List }}"
