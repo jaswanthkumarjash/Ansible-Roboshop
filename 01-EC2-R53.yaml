@@ -40,7 +40,7 @@
     loop: "{{ ec2_output.results }}"
 
   - name: Update Route53 records of frontend servers
-    ansible.aws.route53:
+    amazon.aws.route53:
       state: present
       zone: "{{ dns_name }}"
       record: "{{ item.item }}.{{ dns_name }}"
