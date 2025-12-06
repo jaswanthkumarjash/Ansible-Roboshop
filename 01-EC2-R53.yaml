@@ -7,14 +7,11 @@
     ami_id: ami-09c813fb71547fc4f
     hostedzone_id: Z01808731CH4W38TLY466
     dns_name: jaswanthjash12.shop
-    instances:
-    - mysql
-    - redis
-    - mongo
-  vars_prompt:
-    name: List
-    prompt: "Enter the instance names you want to create: "
-    private: false
+    instances: []
+  # vars_prompt:
+  #   name: List
+  #   prompt: "Enter the instance names you want to create: "
+  #   private: false
 
   tasks:
   - name: Create ec2-instance
@@ -25,7 +22,7 @@
       image_id: "{{ ami_id }}"
       tags:
         Name: "{{ item }}"
-    loop: "{{ List | split(' ') }}"
+    loop: "{{ instances | split(' ') }}"
     register: ec2_output
 
   - name: Update Route53 records of servers otherthan frontend
