@@ -22,7 +22,7 @@
       image_id: "{{ ami_id }}"
       tags:
         Name: "{{ item }}"
-    loop: "{{ instances | split(' ') }}"
+    loop: "{{ instances }}"
     register: ec2_output
 
   - name: Update Route53 records of servers otherthan frontend
