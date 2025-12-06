@@ -7,10 +7,10 @@
     ami_id: ami-09c813fb71547fc4f
     hostedzone_id: Z01808731CH4W38TLY466
     dns_name: jaswanthjash12.shop
-    # instances:
-    # - mysql
-    # - redis
-    # - mongo
+    instances:
+    - mysql
+    - redis
+    - mongo
   vars_prompt:
     name: List
     prompt: "Enter the instance names you want to create: "
