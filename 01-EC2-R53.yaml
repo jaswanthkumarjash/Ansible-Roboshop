@@ -48,7 +48,9 @@
     when:  item.item == "frontend"
     loop: "{{ ec2_output.results }}"
 
-  
+  - name: Print the ec2_output
+    ansible.builtin.debug:
+      msg: "{{ ec2_output }}"
   # - name: Print list from instances
   #   ansible.builtin.debug:
   #     msg: "value is {{ item }}"
