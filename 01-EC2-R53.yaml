@@ -39,7 +39,7 @@
   - name: Update Route53 records of frontend servers
     amazon.aws.route53:
       state: present
-      zone: "{{ dns_name }}"
+      zone: "{{ hostedzone_id }}"
       record: "{{ item.item }}.{{ dns_name }}"
       type: A
       ttl: 1
