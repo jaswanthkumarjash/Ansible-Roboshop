@@ -28,9 +28,3 @@
           read_priv: .*
           write_priv: .*
       state: present
-
-  - name: Create a user
-    ansible.builtin.command: rabbitmqctl add_user roboshop roboshop123
-
-  - name: Set permissions
-    ansible.builtin.command: rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
