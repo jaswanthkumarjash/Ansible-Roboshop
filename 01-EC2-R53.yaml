@@ -8,10 +8,10 @@
     hostedzone_id: Z01808731CH4W38TLY466
     dns_name: jaswanthjash12.shop
     instances: []
-  # vars_prompt:
-  #   name: List
-  #   prompt: "Enter the instance names you want to create: "
-  #   private: false
+  vars_prompt:
+    name: List
+    prompt: "Enter the instance names you want to create: "
+    private: false
 
   tasks:
   - name: Create ec2-instance
@@ -22,7 +22,7 @@
       image_id: "{{ ami_id }}"
       tags:
         Name: "{{ item }}"
-    loop: "{{ instances }}"
+    loop: "{{ List }}"
     register: ec2_output
 
   - name: Update Route53 records of servers otherthan frontend
