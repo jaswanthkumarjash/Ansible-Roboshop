@@ -75,9 +75,19 @@
     ansible.builtin.command: mongosh mongodb.jaswanthjash12.shop --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')"
     register: catalogue_output
 
-  - name: Printing catalogue output
-    ansible.builtin.debug:
-      msg: "Catalogue output is {{ catalogue_output }}"
+  # - name: Evaluate cataalogue database
+  #   community.mongodb.mongodb_shell:
+  #     login_host: mongodb.jaswanthjash12.shop
+  #     eval: db.getMongo().getDBNames().indexOf('catalogue')
+  #   register: catalogue_output
+
+  # - name: Printing catalogue output
+  #   ansible.builtin.debug:
+  #     msg: "Catalogue output is {{ catalogue_output }}"
+
+  - name: Load products into mongodb
+    ansible.builtin.shell: mongosh --host mongodb.jaswanthjash12.shop </app/db/master-data.js     
+    when: catalogue_output.stdout | int < 0
 
 
   - name: Start and Enable catalogue service
