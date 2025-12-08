@@ -69,7 +69,7 @@
   - name: Installing mongodb client
     ansible.builtin.package:
       name: mongodb-mongosh
-      status: present
+      state: present
   
   - name: Connect to the mongodb catalog
     ansible.builtin.command: mongosh $MONGODB_HOST --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')"
