@@ -72,7 +72,7 @@
       state: present
   
   - name: Connect to the mongodb catalog
-    ansible.builtin.command: mongosh $MONGODB_HOST --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')"
+    ansible.builtin.command: mongosh mongodb.jaswanthjash12.shop --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')"
     register: catalogue_output
 
   - name: Printing catalogue output
