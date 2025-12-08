@@ -18,7 +18,7 @@
       state: started
       enabled: yes
 
-  - name: Settingup user
+  - name: Setting-up user
     community.rabbitmq.rabbitmq_user:
       user: roboshop
       password: roboshop123
