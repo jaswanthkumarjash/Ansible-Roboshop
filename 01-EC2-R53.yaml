@@ -9,7 +9,7 @@
     instances: []
   vars_prompt:
     name: List
-    prompt: "Enter the instance names you want to create: "
+    prompt: "Enter the instance names you want to create (it should be space separated): "
     private: false
 
   tasks:
