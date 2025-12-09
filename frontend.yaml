@@ -39,15 +39,16 @@
       dest: /usr/share/nginx/html/
       remote_src: yes
   
-  - name: Remove the nginx configuration
-    ansible.builtin.file:
-      path: /etc/nginx/nginx.conf
-      state: absent
+  # - name: Remove the nginx configuration
+  #   ansible.builtin.file:
+  #     path: /etc/nginx/nginx.conf
+  #     state: absent
 
-  - name: Creating new nginx conf file
+  - name: Updating new nginx conf file
     ansible.builtin.copy:
       src: nginx.conf 
       dest: /etc/nginx/nginx.conf
+      backup: yes
 
   - name: Start and enable service
     ansible.builtin.service:
