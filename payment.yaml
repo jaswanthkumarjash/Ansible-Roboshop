@@ -38,7 +38,7 @@
   - name: Download payment app file
     ansible.builtin.get_url:
       url: https://roboshop-artifacts.s3.amazonaws.com/payment-v3.zip
-      path: /tmp/payment.zip
+      dest: /tmp/payment.zip
 
   - name: Unzip the file
     ansible.builtin.unarchive:
