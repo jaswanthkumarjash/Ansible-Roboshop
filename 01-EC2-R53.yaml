@@ -24,7 +24,7 @@
     loop: "{{ List | split(' ') }}"
     register: ec2_output
 
-  - name: Update Route53 records of servers otherthan frontend
+  - name: Update Route53 records of servers
     amazon.aws.route53:
       state: present
       zone: "{{ dns_name }}"
@@ -33,7 +33,6 @@
       ttl: 1
       value: "{{ item.instances[0].private_ip_address}}"
       overwrite: true
-    when:  item.item != "frontend"
     loop: "{{ ec2_output.results }}"
 
   - name: Update Route53 records of frontend servers
