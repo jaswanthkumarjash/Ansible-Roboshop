@@ -1,0 +1,84 @@
+- name: Configuring shipping server
+  hosts: shipping
+  become: yes
+  tasks: 
+  - name: Install maven
+    ansible.builtin.package:
+      name: "{{ item }}"
+      state: present
+    loop:
+    - maven
+    - mysql
+
+  - name: Create a system user
+    ansible.builtin.user:
+      name: roboshop
+      state: present
+      system: yes
+      shell: /sbin/nologin
+      comment: "roboshop system user"
+      home: /app
+
+  - name: Remove /app directory
+    ansible.builtin.file:
+      path: /app
+      state: absent
+
+  - name: Create /app directory
+    ansible.builtin.file:
+      path: /app
+      state: directory
+
+  - name: Remove existing shipping application
+    ansible.builtin.file:
+      path: /tmp/shipping.zip
+      state: absent
+
+  - name: Downloading latest shipping application file
+    ansible.builtin.get_url:
+      url: https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip
+      dest: /tmp/shipping.zip
+
+  - name: unzipping the file
+    ansible.builtin.unarchive:
+      src: /tmp/shipping.zip
+      dest: /app
+
+  - name: Install dependencies
+    ansible.builtin.command: mvn clean package
+    args:
+      chdir: /app
+
+  - name: Move jar file from target folder
+    ansible.builtin.command: mv target/shipping-1.0.jar shipping.jar
+    args:
+      chdir: /app
+
+  - name: Creating systemd service for shipping
+    ansible.builtin.copy:
+      src: shipping.service
+      dest: /etc/systemd/system/shipping.service
+
+  - name: Daemomn-reload
+    ansible.builtin.systemd_service:
+      daemon_reload: yes
+
+  - name: import shipping data into mysql
+    community.mysql.mysql_db:
+      state: import
+      name: all
+      login_host: mysql.daws86s.fun
+      login_user: root
+      login_password: RoboShop@1
+      target: "{{ item }}"
+    loop:
+    - /app/db/schema.sql
+    - /app/db/app-user.sql 
+    - /app/db/master-data.sql
+
+  - name: enable and start
+    ansible.builtin.service:
+      name: shipping
+      enabled: true
+      state: restarted
+
